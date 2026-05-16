@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { getPath } from "@/utils/getPath";
 import { generateOgImageForPost } from "@/utils/generateOgImages";
 import { SITE } from "@/config";
+import { getPostLang } from "@/i18n";
 
 export async function getStaticPaths() {
   if (!SITE.dynamicOgImage) {
@@ -14,7 +15,10 @@ export async function getStaticPaths() {
   );
 
   return posts.map(post => ({
-    params: { slug: getPath(post.id, post.filePath, false) },
+    params: {
+      lang: getPostLang(post),
+      slug: getPath(post.id, post.filePath, false),
+    },
     props: post,
   }));
 }

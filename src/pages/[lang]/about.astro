@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { isLang, LANGS, ui } from "@/i18n";
+
+export function getStaticPaths() {
+  return LANGS.map(lang => ({ params: { lang } }));
+}
+
+const lang = isLang(Astro.params.lang) ? Astro.params.lang : "en";
+const t = ui[lang];
+---
+
+<Layout title={`${t.aboutTitle} | ${t.siteTitle}`} description={t.siteDesc}>
+  <Header />
+  <Breadcrumb />
+  <main id="main-content" class="app-layout">
+    <section id="about" class="app-prose mb-28 max-w-app prose-img:border-0">
+      <h1 class="text-2xl tracking-wider sm:text-3xl">{t.aboutTitle}</h1>
+      {t.aboutBody.map(paragraph => <p>{paragraph}</p>)}
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -7,13 +7,24 @@ import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import getPostsByGroupCondition from "@/utils/getPostsByGroupCondition";
 import { SITE } from "@/config";
+import { getPostsByLang, isLang, LANGS, ui } from "@/i18n";
+
+export function getStaticPaths() {
+  return LANGS.map(lang => ({ params: { lang } }));
+}
+
+const lang = isLang(Astro.params.lang) ? Astro.params.lang : "en";
+const t = ui[lang];
 
 // Redirect to 404 page if `showArchives` config is false
 if (!SITE.showArchives) {
   return Astro.redirect("/404");
 }
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = getPostsByLang(
+  await getCollection("blog", ({ data }) => !data.draft),
+  lang
+);
 
 const months = [
   "January",
@@ -31,9 +42,9 @@ const months = [
 ];
 ---
 
-<Layout title={`Archives | ${SITE.title}`}>
+<Layout title={`${t.archivesTitle} | ${t.siteTitle}`} description={t.siteDesc}>
   <Header />
-  <Main pageTitle="Archives" pageDesc="All the articles I've archived.">
+  <Main pageTitle={t.archivesTitle} pageDesc={t.archivesDesc}>
     {
       Object.entries(
         getPostsByGroupCondition(posts, post =>

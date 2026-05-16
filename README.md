@@ -8,6 +8,7 @@ Neil Chen's Astro + AstroPaper blog, configured for GitHub Pages.
 - AstroPaper
 - Tailwind CSS
 - Pagefind search
+- English and Chinese routes
 - GitHub Pages deployment
 - Default light mode with manual dark mode toggle
 
@@ -28,6 +29,10 @@ pnpm run preview
 ## Content
 
 Blog posts live in `src/data/blog`.
+
+English posts live in `src/data/blog/en`.
+
+Chinese posts live in `src/data/blog/zh`.
 
 Site metadata is configured in `src/config.ts`.
 

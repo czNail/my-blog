@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
 import { getBasePath } from "@/utils/getBasePath";
+import { getLangFromUrl, ui } from "@/i18n";
 import "@/styles/global.css";
 
 type Props = {
@@ -31,6 +32,8 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -50,11 +53,7 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html
-  dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
-  class:list={{ "scroll-smooth": scrollSmooth }}
->
+<html dir={SITE.dir} lang={lang} class:list={{ "scroll-smooth": scrollSmooth }}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -118,8 +117,8 @@ const structuredData = {
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={SITE.title}
-      href={new URL(getBasePath("rss.xml"), SITE.website)}
+      title={t.siteTitle}
+      href={new URL(getBasePath(`/${lang}/rss.xml`), SITE.website)}
     />
 
     <meta name="theme-color" content="" />
