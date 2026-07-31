@@ -1,46 +1,41 @@
 # Neil's Blog
 
-Neil Chen's Astro + AstroPaper blog, configured for GitHub Pages.
+Neil Chen 的 Astro + AstroPaper 博客，部署在 GitHub Pages。
 
-## Stack
+## 技术栈
 
 - Astro 5
 - AstroPaper
 - Tailwind CSS
-- Pagefind search
-- English and Chinese routes
-- GitHub Pages deployment
-- Default light mode with manual dark mode toggle
+- Pagefind 搜索
+- GitHub Pages 部署
+- 默认浅色模式，支持手动切换深色
 
-## Development
+## 开发
 
 ```bash
 pnpm install
 pnpm run dev
 ```
 
-## Build
+## 构建
 
 ```bash
 pnpm run build
 pnpm run preview
 ```
 
-## Content
+## 内容
 
-Blog posts live in `src/data/blog`.
+博客文章放在 `src/data/blog` 下。
 
-English posts live in `src/data/blog/en`.
+站点配置在 `src/config.ts` 中。
 
-Chinese posts live in `src/data/blog/zh`.
+## 部署
 
-Site metadata is configured in `src/config.ts`.
+推送到 `main` 分支会自动触发 `.github/workflows/deploy.yml`，将 `dist` 发布到 GitHub Pages。
 
-## Deployment
-
-Pushes to `main` run `.github/workflows/deploy.yml` and publish `dist` to GitHub Pages.
-
-Expected URL:
+站点地址：
 
 ```text
 https://cznail.github.io/my-blog/

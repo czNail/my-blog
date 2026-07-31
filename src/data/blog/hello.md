@@ -103,7 +103,5 @@ console.log(message);
 这篇文章就是一个起点。之后新建中文文章时，把文件放到：
 
 ```text
-src/data/blog/zh/your-post.md
+src/data/blog/your-post.md
 ```
-
-直接放到中文目录下：
