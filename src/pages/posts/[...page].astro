@@ -9,26 +9,21 @@ import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
-import { getPostsByLang, isLang, LANGS, ui } from "@/i18n";
+import { ui } from "@/i18n";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return LANGS.flatMap(lang =>
-    paginate(getSortedPosts(getPostsByLang(posts, lang)), {
-      params: { lang },
-      pageSize: SITE.postPerPage,
-    })
-  );
+  return paginate(getSortedPosts(posts), {
+    pageSize: SITE.postPerPage,
+  });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
-const lang = isLang(Astro.params.lang) ? Astro.params.lang : "en";
-const t = ui[lang];
 ---
 
-<Layout title={`${t.postsTitle} | ${t.siteTitle}`} description={t.siteDesc}>
+<Layout title={`${ui.postsTitle} | ${ui.siteTitle}`} description={ui.siteDesc}>
   <Header />
-  <Main pageTitle={t.postsTitle} pageDesc={t.postsDesc}>
+  <Main pageTitle={ui.postsTitle} pageDesc={ui.postsDesc}>
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>

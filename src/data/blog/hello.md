@@ -106,8 +106,4 @@ console.log(message);
 src/data/blog/zh/your-post.md
 ```
 
-如果要写对应英文版，就放到：
-
-```text
-src/data/blog/en/your-post.md
-```
+直接放到中文目录下：

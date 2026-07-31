@@ -3,10 +3,7 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 import { getBasePath } from "@/utils/getBasePath";
-import { getLangFromUrl, ui } from "@/i18n";
-
-const lang = getLangFromUrl(Astro.url);
-const t = ui[lang];
+import { ui } from "@/i18n";
 ---
 
 {
@@ -14,11 +11,11 @@ const t = ui[lang];
     <div class="app-layout flex items-center justify-start">
       <LinkButton
         id="back-button"
-        href={getBasePath(`/${lang}/`)}
+        href={getBasePath("/")}
         class="focus-outline -ms-2 mt-8 mb-2 hover:text-foreground/75"
       >
         <IconChevronLeft class="inline-block size-6 rtl:rotate-180" />
-        <span>{t.goBack}</span>
+        <span>{ui.goBack}</span>
       </LinkButton>
     </div>
   )

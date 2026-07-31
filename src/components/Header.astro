@@ -7,24 +7,15 @@ import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
-import {
-  getAlternateLang,
-  getLangFromUrl,
-  getLanguageSwitchPath,
-  localizedPath,
-  ui,
-} from "@/i18n";
+import { getBasePath } from "@/utils/getBasePath";
+import { ui } from "@/i18n";
 
 const { pathname } = Astro.url;
-const lang = getLangFromUrl(Astro.url);
-const otherLang = getAlternateLang(lang);
-const t = ui[lang];
 
 // Remove trailing slash from current pathname if exists
 const currentPath =
   pathname
     .replace(import.meta.env.BASE_URL.replace(/\/$/, ""), "")
-    .replace(`/${lang}`, "")
     .replace(/\/$/, "") || "/";
 
 const isActive = (path: string) => {
@@ -56,10 +47,10 @@ const isActive = (path: string) => {
     ]}
   >
     <a
-      href={localizedPath("/", lang)}
+      href={getBasePath("/")}
       class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
     >
-      {t.siteTitle}
+      {ui.siteTitle}
     </a>
     <nav
       id="nav-menu"
@@ -86,71 +77,61 @@ const isActive = (path: string) => {
       >
         <li class="col-span-2">
           <a
-            href={localizedPath("/posts", lang)}
+            href={getBasePath("/posts")}
             class:list={{ "active-nav": isActive("/posts") }}
           >
-            {t.navPosts}
+            {ui.navPosts}
           </a>
         </li>
         <li class="col-span-2">
           <a
-            href={localizedPath("/tags", lang)}
+            href={getBasePath("/tags")}
             class:list={{ "active-nav": isActive("/tags") }}
           >
-            {t.navTags}
+            {ui.navTags}
           </a>
         </li>
         <li class="col-span-2">
           <a
-            href={localizedPath("/about", lang)}
+            href={getBasePath("/about")}
             class:list={{ "active-nav": isActive("/about") }}
           >
-            {t.navAbout}
+            {ui.navAbout}
           </a>
         </li>
         {
           SITE.showArchives && (
             <li class="col-span-2">
               <LinkButton
-                href={localizedPath("/archives", lang)}
+                href={getBasePath("/archives")}
                 class:list={[
                   "focus-outline flex justify-center p-3 sm:p-1",
                   {
                     "active-nav [&>svg]:stroke-accent": isActive("/archives"),
                   },
                 ]}
-                title={t.navArchives}
+                title={ui.navArchives}
                 aria-label="archives"
               >
                 <IconArchive class="hidden sm:inline-block" />
-                <span class="sm:sr-only">{t.navArchives}</span>
+                <span class="sm:sr-only">{ui.navArchives}</span>
               </LinkButton>
             </li>
           )
         }
         <li class="col-span-1 flex items-center justify-center">
           <LinkButton
-            href={localizedPath("/search", lang)}
+            href={getBasePath("/search")}
             class:list={[
               "focus-outline flex p-3 sm:p-1",
               { "[&>svg]:stroke-accent": isActive("/search") },
             ]}
-            title={t.navSearch}
+            title={ui.navSearch}
             aria-label="search"
           >
             <IconSearch />
-            <span class="sr-only">{t.navSearch}</span>
+            <span class="sr-only">{ui.navSearch}</span>
           </LinkButton>
-        </li>
-        <li class="col-span-1 flex items-center justify-center">
-          <a
-            href={getLanguageSwitchPath(pathname, otherLang)}
-            class="focus-outline p-3 text-sm font-semibold sm:p-1"
-            hreflang={otherLang}
-            aria-label={otherLang === "zh" ? "切换到中文" : "Switch to English"}
-          >
-            {otherLang === "zh" ? "中文" : "EN"}
-          </a>
         </li>
         {
           SITE.lightAndDarkMode && (

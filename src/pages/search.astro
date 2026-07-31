@@ -5,20 +5,14 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
-import { isLang, LANGS, ui } from "@/i18n";
-
-export function getStaticPaths() {
-  return LANGS.map(lang => ({ params: { lang } }));
-}
+import { ui } from "@/i18n";
 
 const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
-const lang = isLang(Astro.params.lang) ? Astro.params.lang : "en";
-const t = ui[lang];
 ---
 
-<Layout title={`${t.searchTitle} | ${t.siteTitle}`} description={t.siteDesc}>
+<Layout title={`${ui.searchTitle} | ${ui.siteTitle}`} description={ui.siteDesc}>
   <Header />
-  <Main pageTitle={t.searchTitle} pageDesc={t.searchDesc}>
+  <Main pageTitle={ui.searchTitle} pageDesc={ui.searchDesc}>
     <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
   </Main>
   <Footer />
