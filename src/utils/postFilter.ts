@@ -1,11 +1,9 @@
 import type { CollectionEntry } from "astro:content";
-import { SITE } from "@/config";
 
+// 只过滤草稿，不按 pubDatetime 过滤：
+// 写好的文章不排队等"定时发布"，日期写哪天就哪天显示。
 const postFilter = ({ data }: CollectionEntry<"blog">) => {
-  const isPublishTimePassed =
-    Date.now() >
-    new Date(data.pubDatetime).getTime() - SITE.scheduledPostMargin;
-  return !data.draft && (import.meta.env.DEV || isPublishTimePassed);
+  return !data.draft;
 };
 
 export default postFilter;
