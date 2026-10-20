@@ -9,15 +9,19 @@ html[data-theme="light"] {
   --foreground: #282728;
   --accent: #006cac;
   --muted: #e6e6e6;
-  --border: #ece9e9;
+  --border: #e1e7ec;
+  --site-muted: #65717c;
+  --site-accent-soft: #dceef5;
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  --background: #171f2c;
+  --foreground: #e9edf3;
+  --accent: #80c7ed;
+  --muted: #202c3c;
+  --border: #344052;
+  --site-muted: #a3afc0;
+  --site-accent-soft: #28495f;
 }
 
 @theme inline {
@@ -66,5 +70,7 @@ html[data-theme="dark"] {
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
-  scroll-margin-block: 1rem;
+  scroll-margin-block: 7rem;
 }
+
+@media (max-width: 700px) { :target { scroll-margin-block: 8rem; } }

@@ -1,105 +1,72 @@
-// Constants
-const THEME = "theme";
-const LIGHT = "light";
-const DARK = "dark";
-
-// Initial color scheme
-// Can be "light", "dark", or empty string for system's prefers-color-scheme
-const initialColorScheme = "dark";
+const THEME = "neil-homepage:theme";
+const LEGACY_THEME = "theme";
 
 function getPreferTheme(): string {
-  // get theme data from local storage (user's explicit choice)
-  const currentTheme = localStorage.getItem(THEME);
-  if (currentTheme) return currentTheme;
-
-  // return initial color scheme if it is set (site default)
-  if (initialColorScheme) return initialColorScheme;
-
-  // return user device's prefer color scheme (system fallback)
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? DARK
-    : LIGHT;
+  try {
+    const saved = localStorage.getItem(THEME) || localStorage.getItem(LEGACY_THEME);
+    if (saved === "light" || saved === "dark") return saved;
+  } catch {}
+  return "light";
 }
 
-// Use existing theme value from inline script if available, otherwise detect
-let themeValue = window.theme?.themeValue ?? getPreferTheme();
-
-function setPreference(): void {
-  localStorage.setItem(THEME, themeValue);
-  reflectPreference();
-}
+let themeValue = window.theme?.getTheme() ?? getPreferTheme();
 
 function reflectPreference(): void {
-  document.firstElementChild?.setAttribute("data-theme", themeValue);
-
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
-
-  // Get a reference to the body element
-  const body = document.body;
-
-  // Check if the body element exists before using getComputedStyle
-  if (body) {
-    // Get the computed styles for the body element
-    const computedStyles = window.getComputedStyle(body);
-
-    // Get the background color property
-    const bgColor = computedStyles.backgroundColor;
-
-    // Set the background color in <meta theme-color ... />
-    document
-      .querySelector("meta[name='theme-color']")
-      ?.setAttribute("content", bgColor);
-  }
+  document.documentElement.dataset.theme = themeValue;
+  const button = document.querySelector("#theme-btn");
+  const label = themeValue === "dark" ? "切换到浅色主题" : "切换到深色主题";
+  button?.setAttribute("aria-label", label);
+  button?.setAttribute("title", label);
+  button?.setAttribute("aria-pressed", String(themeValue === "dark"));
+  const background = themeValue === "dark" ? "#171f2c" : "#fdfdfd";
+  document.querySelector("meta[name='theme-color']")?.setAttribute("content", background);
 }
 
-// Update the global theme API
-if (window.theme) {
-  window.theme.setPreference = setPreference;
-  window.theme.reflectPreference = reflectPreference;
-} else {
-  window.theme = {
-    themeValue,
-    setPreference,
-    reflectPreference,
-    getTheme: () => themeValue,
-    setTheme: (val: string) => {
-      themeValue = val;
-    },
-  };
+function setPreference(): void {
+  try {
+    localStorage.setItem(THEME, themeValue);
+    localStorage.setItem(LEGACY_THEME, themeValue);
+  } catch {}
+  reflectPreference();
 }
 
-// Ensure theme is reflected (in case body wasn't ready when inline script ran)
-reflectPreference();
+window.theme = {
+  themeValue,
+  setPreference,
+  reflectPreference,
+  getTheme: () => themeValue,
+  setTheme: (value: string) => {
+    if (value !== "light" && value !== "dark") return;
+    themeValue = value;
+    if (window.theme) window.theme.themeValue = value;
+  },
+};
 
 function setThemeFeature(): void {
-  // set on load so screen readers can get the latest value on the button
+  themeValue = getPreferTheme();
+  window.theme?.setTheme(themeValue);
   reflectPreference();
-
-  // now this script can find and listen for clicks on the control
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
-    window.theme?.setTheme(themeValue);
+  const button = document.querySelector<HTMLButtonElement>("#theme-btn");
+  if (!button || button.dataset.themeBound) return;
+  button.dataset.themeBound = "true";
+  button.addEventListener("click", () => {
+    window.theme?.setTheme(themeValue === "light" ? "dark" : "light");
     setPreference();
   });
 }
 
-// Set up theme features after page load
 setThemeFeature();
-
-// Runs on view transitions navigation
 document.addEventListener("astro:after-swap", setThemeFeature);
 
-// Set theme-color value before page transition
-// to avoid navigation bar color flickering in Android dark mode
-document.addEventListener("astro:before-swap", event => {
-  const astroEvent = event;
-  const bgColor = document
-    .querySelector("meta[name='theme-color']")
-    ?.getAttribute("content");
+window.addEventListener("storage", event => {
+  if (event.key !== THEME && event.key !== LEGACY_THEME) return;
+  window.theme?.setTheme(getPreferTheme());
+  reflectPreference();
+});
 
-  if (bgColor) {
-    astroEvent.newDocument
-      .querySelector("meta[name='theme-color']")
-      ?.setAttribute("content", bgColor);
-  }
+document.addEventListener("astro:before-swap", event => {
+  event.newDocument.documentElement.dataset.theme = themeValue;
+  event.newDocument.querySelector("meta[name='theme-color']")?.setAttribute(
+    "content", themeValue === "dark" ? "#171f2c" : "#fdfdfd"
+  );
 });

@@ -1,9 +1,9 @@
 export const ui = {
-  siteTitle: "Neil 的博客",
+  siteTitle: "木匠钉子 · 博客",
   siteDesc: "Neil Chen 的个人博客。",
-  homeTitle: "你好，我是 Neil",
+  homeTitle: "写下思考",
   homeDesc:
-    "欢迎来到 Neil Chen 的个人博客。这里会放一些笔记、实验，以及值得写下来的东西。",
+    "关于 PostgreSQL、系统设计与开发实践的思考和记录。",
   navPosts: "文章",
   navTags: "标签",
   navAbout: "关于",

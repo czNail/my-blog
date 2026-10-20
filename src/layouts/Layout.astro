@@ -6,6 +6,7 @@ import { SITE } from "@/config";
 import { getBasePath } from "@/utils/getBasePath";
 import { ui } from "@/i18n";
 import "@/styles/global.css";
+import SiteNav from "@/components/SiteNav.astro";
 
 type Props = {
   title?: string;
@@ -54,7 +55,7 @@ const structuredData = {
 <html
   dir={SITE.dir}
   lang="zh-CN"
-  data-theme="dark"
+  data-theme="light"
   class:list={{ "scroll-smooth": scrollSmooth }}
 >
   <head>
@@ -143,18 +144,11 @@ const structuredData = {
     <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
     <script is:inline>
       (function () {
-        const initialColorScheme = "dark"; // "light" | "dark"
-        const currentTheme = localStorage.getItem("theme");
-
-        function getPreferTheme() {
-          if (currentTheme) return currentTheme;
-          if (initialColorScheme) return initialColorScheme;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-        }
-
-        const themeValue = getPreferTheme();
+        let themeValue = "light";
+        try {
+          const saved = localStorage.getItem("neil-homepage:theme") || localStorage.getItem("theme");
+          if (saved === "light" || saved === "dark") themeValue = saved;
+        } catch {}
 
         // Set theme immediately to prevent flash
         document.firstElementChild?.setAttribute("data-theme", themeValue);
@@ -171,6 +165,7 @@ const structuredData = {
     </script>
   </head>
   <body>
+    <SiteNav />
     <slot />
 
     <!-- Load full theme logic -->
