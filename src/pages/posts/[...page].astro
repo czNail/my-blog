@@ -5,7 +5,7 @@ import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Card from "@/components/Card.astro";
+import ArticleTimeline from "@/components/ArticleTimeline.astro";
 import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
@@ -24,9 +24,7 @@ const { page } = Astro.props;
 <Layout title={`${ui.postsTitle} | ${ui.siteTitle}`} description={ui.siteDesc}>
   <Header />
   <Main pageTitle={ui.postsTitle} pageDesc={ui.postsDesc}>
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
+    <ArticleTimeline posts={page.data} />
   </Main>
 
   <Pagination {page} />

@@ -6,7 +6,7 @@ export const SITE = {
   title: "木匠钉子 · 博客",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 4,
+  postPerIndex: 8,
   postPerPage: 4,
   showArchives: true,
   showBackButton: true, // show back button in post detail

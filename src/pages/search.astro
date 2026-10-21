@@ -19,6 +19,8 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 </Layout>
 
 <script>
+  import { getBasePath } from "@/utils/getBasePath";
+
   function initSearch() {
     const pageFindSearch: HTMLElement | null =
       document.querySelector("#pagefind-search");
@@ -46,6 +48,8 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
       // Init pagefind ui
       const search = new PagefindUI({
         element: "#pagefind-search",
+        bundlePath: getBasePath("/pagefind/"),
+        baseUrl: getBasePath("/"),
         showImages: false,
         showSubResults: true,
         processTerm: function (term: string) {

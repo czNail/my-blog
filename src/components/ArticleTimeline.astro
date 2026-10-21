@@ -1,0 +1,86 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@/config";
+import { getPath } from "@/utils/getPath";
+import { slugifyStr } from "@/utils/slugify";
+import { groupTimelinePosts, publicationDate } from "@/utils/timeline";
+import "@/styles/timeline.css";
+
+type Props = { posts: CollectionEntry<"blog">[] };
+const { posts } = Astro.props;
+const years = groupTimelinePosts(posts, SITE.timezone);
+---
+
+<div class="article-timeline" data-article-timeline>
+  {
+    years.map(({ year, months }) => (
+      <section class="timeline-year" aria-label={`${year}年的文章`}>
+        <h2 class="timeline-year-title">{year}</h2>
+        <div class="timeline-track" data-timeline-track>
+          <div class="timeline-active-line" aria-hidden="true" />
+          {months.map(({ label, entries }) => (
+            <details class="timeline-month" open>
+              <summary>
+                <span>{label}</span>
+                <span class="timeline-month-toggle" aria-hidden="true" />
+                <span class="sr-only">的文章，展开或收起</span>
+              </summary>
+              <ol class="timeline-posts">
+                {entries.map(({ post, date }) => {
+                  const updated = post.data.modDatetime;
+                  const modified = updated && updated > post.data.pubDatetime;
+                  return (
+                    <li class="timeline-entry" data-timeline-entry>
+                      <time
+                        class="timeline-date"
+                        datetime={post.data.pubDatetime.toISOString()}
+                        aria-label={date.full}
+                        title={date.full}
+                      >
+                        {date.short}
+                      </time>
+                      <div class="timeline-copy">
+                        <h3>
+                          <a
+                            class="timeline-title"
+                            href={getPath(post.id, post.filePath)}
+                            style={{
+                              viewTransitionName: slugifyStr(
+                                post.data.title.replaceAll(".", "-")
+                              ),
+                            }}
+                          >
+                            {post.data.title}
+                            <span class="timeline-arrow" aria-hidden="true">
+                              ↗
+                            </span>
+                          </a>
+                        </h3>
+                        <p>{post.data.description}</p>
+                        {modified && (
+                          <p class="timeline-updated">
+                            更新于{" "}
+                            {
+                              publicationDate(
+                                updated,
+                                post.data.timezone || SITE.timezone
+                              ).full
+                            }
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>
+
+<script>
+  import "@/scripts/timeline";
+</script>

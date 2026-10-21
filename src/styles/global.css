@@ -79,3 +79,9 @@ kbd,
 samp {
   font-family: var(--site-font-mono);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

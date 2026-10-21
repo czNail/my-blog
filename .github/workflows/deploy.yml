@@ -35,8 +35,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test publication grouping and rendering
+        run: pnpm test
+
       - name: Build
         run: pnpm run build
+
+      - name: Install browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Check timeline and reading interactions
+        run: pnpm run test:e2e
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blog-reading-screenshots
+          path: artifacts/blog
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

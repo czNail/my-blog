@@ -13,10 +13,6 @@
       @apply mb-3 text-foreground;
     }
 
-    h3 {
-      @apply italic;
-    }
-
     p,
     strong,
     ol,
@@ -79,7 +75,7 @@
     }
 
     details {
-      @apply inline-block cursor-pointer text-foreground select-none [&_p]:hidden [&_ul]:my-0!;
+      @apply block text-foreground;
     }
 
     summary {

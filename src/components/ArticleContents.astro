@@ -1,0 +1,38 @@
+---
+type Heading = { depth: number; slug: string; text: string };
+type Props = { headings: Heading[] };
+const headings = Astro.props.headings.filter(
+  heading => heading.depth === 2 || heading.depth === 3
+);
+---
+
+{
+  headings.length > 0 && (
+    <aside class="reading-sidebar" data-pagefind-ignore>
+      <nav class="post-toc post-toc-desktop" aria-label="文章目录">
+        <h2>文章目录</h2>
+        <ol>
+          {headings.map(heading => (
+            <li class:list={{ "toc-subheading": heading.depth === 3 }}>
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <details class="post-toc post-toc-mobile">
+        <summary>
+          文章目录<span aria-hidden="true">＋</span>
+        </summary>
+        <nav aria-label="文章目录">
+          <ol>
+            {headings.map(heading => (
+              <li class:list={{ "toc-subheading": heading.depth === 3 }}>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+    </aside>
+  )
+}

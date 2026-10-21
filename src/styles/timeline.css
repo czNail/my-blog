@@ -1,0 +1,190 @@
+.article-timeline {
+  --timeline-rail: 78px;
+  margin-block: 2.5rem 1rem;
+}
+.timeline-year + .timeline-year {
+  margin-top: 2.5rem;
+}
+.timeline-year-title {
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--site-border);
+  font: 1.45rem/1.4 var(--site-font-mono);
+  letter-spacing: -0.04em;
+  color: var(--site-text);
+}
+.timeline-track {
+  position: relative;
+}
+.timeline-track::before,
+.timeline-active-line {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: var(--timeline-rail);
+  width: 1px;
+  bottom: 26px;
+  background: var(--site-border);
+  pointer-events: none;
+}
+.timeline-active-line {
+  bottom: auto;
+  height: 0;
+  background: var(--site-accent);
+  transition: height 240ms ease;
+}
+.timeline-month > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: fit-content;
+  min-height: 44px;
+  padding: 0 0.75rem 0 104px;
+  color: var(--site-muted);
+  font-size: 0.8rem;
+  list-style: none;
+  cursor: pointer;
+}
+.timeline-month > summary::-webkit-details-marker {
+  display: none;
+}
+.timeline-month > summary:hover {
+  color: var(--site-accent);
+}
+.timeline-month-toggle::before {
+  content: "+";
+  font: 1rem/1 var(--site-font-mono);
+}
+.timeline-month[open] > summary .timeline-month-toggle::before {
+  content: "−";
+}
+.timeline-posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.timeline-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 46px;
+  padding-block: 14px 28px;
+}
+.timeline-entry::before {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: calc(var(--timeline-rail) - 4px);
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--site-border);
+  border-radius: 50%;
+  background: var(--site-bg);
+  transition:
+    background 180ms,
+    border-color 180ms,
+    box-shadow 180ms;
+}
+.timeline-date {
+  padding-top: 4px;
+  color: var(--site-muted);
+  font: 0.75rem/1.9 var(--site-font-mono);
+  transition: color 180ms;
+}
+.timeline-copy {
+  min-width: 0;
+  transition: transform 180ms;
+}
+.timeline-copy h3 {
+  margin: 0 0 0.5rem;
+}
+.timeline-title {
+  color: var(--site-text);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.65;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 180ms;
+}
+.timeline-copy > p {
+  margin: 0;
+  color: var(--site-muted);
+  font-size: 0.9rem;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.timeline-copy > .timeline-updated {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+.timeline-arrow {
+  display: inline-block;
+  margin-left: 0.4rem;
+  color: var(--site-accent);
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translate(-3px, 2px);
+  transition:
+    opacity 180ms,
+    transform 180ms;
+}
+.timeline-entry:is(:hover, :focus-within, .is-active)::before {
+  background: var(--site-accent);
+  border-color: var(--site-accent);
+  box-shadow: 0 0 0 5px var(--site-accent-soft);
+}
+.timeline-entry:is(:hover, :focus-within, .is-active) .timeline-date,
+.timeline-entry:is(:hover, :focus-within, .is-active) .timeline-title {
+  color: var(--site-accent);
+}
+.timeline-entry:is(:hover, :focus-within, .is-active) .timeline-copy {
+  transform: translateX(3px);
+}
+.timeline-entry:is(:hover, :focus-within, .is-active) .timeline-arrow {
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 600px) {
+  .article-timeline {
+    --timeline-rail: 5px;
+    margin-top: 2rem;
+  }
+  .timeline-month > summary {
+    padding-left: 29px;
+  }
+  .timeline-entry {
+    display: block;
+    padding: 10px 0 26px 29px;
+  }
+  .timeline-entry::before {
+    top: 18px;
+  }
+  .timeline-date {
+    display: block;
+    margin-bottom: 0.35rem;
+    padding: 0;
+  }
+  .timeline-title {
+    display: inline-block;
+    min-height: 44px;
+    font-size: 1.05rem;
+  }
+  .timeline-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-active-line,
+  .timeline-entry::before,
+  .timeline-date,
+  .timeline-title,
+  .timeline-copy,
+  .timeline-arrow {
+    transition: none;
+  }
+  .timeline-entry:is(:hover, :focus-within, .is-active) .timeline-copy {
+    transform: none;
+  }
+}

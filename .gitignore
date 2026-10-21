@@ -28,3 +28,6 @@ pnpm-debug.log*
 public/pagefind
 public/site-ui/
 artifacts/
+
+test-results/
+playwright-report/
