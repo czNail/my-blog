@@ -1,0 +1,2 @@
+// Generated from logo.svg by sync-site-ui.mjs --manifest.
+export default "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" viewBox=\"0 0 64 64\" fill=\"none\" aria-hidden=\"true\"><g transform=\"rotate(35 32 32)\"><path d=\"M28 17h8v29l-4 12-4-12V17Z\" fill=\"currentColor\"/><rect x=\"18\" y=\"10\" width=\"28\" height=\"9\" rx=\"3\" fill=\"currentColor\"/><rect x=\"18\" y=\"10\" width=\"28\" height=\"3\" rx=\"1.5\" fill=\"#D69A66\"/></g></svg>\n";

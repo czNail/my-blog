@@ -1,31 +1,21 @@
 @import "tailwindcss";
+@import "../../vendor/site-ui/tokens.css";
+@import "../../vendor/site-ui/shell.css";
 @import "./typography.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-:root,
-html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #e1e7ec;
-  --site-muted: #65717c;
-  --site-accent-soft: #dceef5;
-}
-
-html[data-theme="dark"] {
-  --background: #171f2c;
-  --foreground: #e9edf3;
-  --accent: #80c7ed;
-  --muted: #202c3c;
-  --border: #344052;
-  --site-muted: #a3afc0;
-  --site-accent-soft: #28495f;
+/* Adapter: muted is a background utility in AstroPaper, not secondary text. */
+:root {
+  --background: var(--site-bg);
+  --foreground: var(--site-text);
+  --accent: var(--site-accent);
+  --muted: var(--site-soft);
+  --border: var(--site-border);
 }
 
 @theme inline {
-  --font-app: var(--font-google-sans-code);
+  --font-app: var(--site-font-sans);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
@@ -73,4 +63,19 @@ html[data-theme="dark"] {
   scroll-margin-block: 7rem;
 }
 
-@media (max-width: 700px) { :target { scroll-margin-block: 8rem; } }
+@media (max-width: 700px) {
+  :target {
+    scroll-margin-block: 8rem;
+  }
+}
+
+/* Reading typography is local; the font families come from the shared foundation. */
+.app-prose {
+  line-height: 1.85;
+}
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--site-font-mono);
+}

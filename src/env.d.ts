@@ -1,9 +1,1 @@
-interface Window {
-  theme?: {
-    themeValue: string;
-    setPreference: () => void;
-    reflectPreference: () => void;
-    getTheme: () => string;
-    setTheme: (val: string) => void;
-  };
-}
+// Global theme behavior is provided by the shared site-ui runtime.

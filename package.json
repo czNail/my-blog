@@ -11,7 +11,13 @@
     "astro": "astro",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check:site-ui": "node scripts/sync-site-ui.mjs",
+    "sync:site-ui": "node scripts/sync-site-ui.mjs --update",
+    "prepare:site-ui": "node scripts/sync-site-ui.mjs && node scripts/prepare-site-ui.mjs",
+    "prebuild": "npm run prepare:site-ui",
+    "predev": "npm run prepare:site-ui",
+    "format:check:changed": "node scripts/check-format-changed.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.14",

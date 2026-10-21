@@ -16,20 +16,22 @@ jobs:
   build:
     name: Code standards & build
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 10
 
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [24]
 
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: "📦 Install pnpm"
         uses: pnpm/action-setup@v4
         with:
-          version: 10.11.1
+          version: 11.1.2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -38,13 +40,15 @@ jobs:
           cache: "pnpm"
 
       - name: "📦 Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: "🔎 Lint code"
         run: pnpm run lint
 
       - name: "📝 Checking code format"
-        run: pnpm run format:check
+        run: pnpm run format:check:changed
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
 
       - name: "🚀 Build the project"
         run: pnpm run build

@@ -1,31 +1,6 @@
-<div class="site-navigation">
-  <div class="site-navigation-inner">
-    <a class="site-brand" href="/" aria-label="木匠钉子，返回个人主页"><span class="site-brand-mark" aria-hidden="true">n<span>.</span></span><span>木匠钉子</span></a>
-    <nav aria-label="站点导航">
-      <a href="/">个人主页</a>
-      <a href="/#projects">项目</a>
-      <a href="/my-blog/" aria-current="location">博客</a>
-      <details class="tools-menu">
-        <summary>小工具</summary>
-        <div class="tools-popover">
-          <div data-tools-list><a href="/portfolio-pilot/"><strong>仓位助手</strong><small>记录大类仓位与目标比例，安排定投与再平衡。</small></a></div>
-          <a href="/#tools">查看全部小工具 →</a>
-        </div>
-      </details>
-      <a href="https://github.com/czNail">GitHub ↗</a>
-    </nav>
-  </div>
-</div>
-<script is:inline src="/tools-menu.js" defer></script>
+---
+import { headerMarkup } from "../../vendor/site-ui/shell.mjs";
+---
 
-<style>
-  nav :global(.tools-popover a){white-space:normal}
-  .site-navigation{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--border);background:var(--background);--menu-muted:var(--site-muted);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
-  .site-navigation-inner{width:min(1080px,calc(100% - 80px));margin-inline:auto;min-height:88px;display:flex;align-items:center;gap:34px}
-  .site-brand{display:flex;align-items:center;gap:13px;font-size:16px;font-weight:650;letter-spacing:.03em;white-space:nowrap}
-  .site-brand-mark{font-size:35px;line-height:1;letter-spacing:-4px;font-weight:750;color:var(--accent);padding-right:3px}.site-brand-mark span{color:#65a39c}
-  nav{display:flex;align-items:center;gap:24px;margin-left:auto;font-size:14px;color:var(--site-muted)}
-  nav a{white-space:nowrap}nav a:hover,nav a[aria-current]{color:var(--accent)}nav a[aria-current]{font-weight:600}
-  @media(max-width:900px){.site-navigation-inner{width:calc(100% - 56px);gap:22px}nav{gap:16px;font-size:13px}}
-  @media(max-width:700px){.site-navigation-inner{width:calc(100% - 40px);min-height:0;flex-wrap:wrap;gap:10px;padding:14px 0 12px}.site-brand{font-size:14px;gap:10px}.site-brand-mark{font-size:31px}nav{width:100%;margin:0;justify-content:space-between;gap:8px;font-size:12px;min-height:35px}}
-</style>
+<Fragment set:html={headerMarkup({ active: "blog" })} />
+<script is:inline src="/tools-menu.js" defer></script>

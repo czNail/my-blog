@@ -1,5 +1,4 @@
 ---
-import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
@@ -63,14 +62,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href={getBasePath("favicon.svg")} />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="stylesheet" href="/tools-menu.css" />
     <meta name="generator" content={Astro.generator} />
-
-    <!-- Load Font -->
-    <Font
-      cssVariable="--font-google-sans-code"
-      preload={[{ subset: "latin", weight: 400, style: "normal" }]}
-    />
 
     <!-- General Meta Tags -->
     <title>{title}</title>
@@ -142,34 +134,10 @@ const structuredData = {
 
     <ClientRouter />
 
-    <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
-    <script is:inline>
-      (function () {
-        let themeValue = "light";
-        try {
-          const saved = localStorage.getItem("neil-homepage:theme") || localStorage.getItem("theme");
-          if (saved === "light" || saved === "dark") themeValue = saved;
-        } catch {}
-
-        // Set theme immediately to prevent flash
-        document.firstElementChild?.setAttribute("data-theme", themeValue);
-
-        // Export minimal API for external script
-        window.theme = {
-          themeValue: themeValue,
-          getTheme: () => window.theme.themeValue,
-          setTheme: val => {
-            window.theme.themeValue = val;
-          },
-        };
-      })();
-    </script>
+    <script is:inline src={getBasePath("site-ui/runtime.js")}></script>
   </head>
   <body>
     <SiteNav />
     <slot />
-
-    <!-- Load full theme logic -->
-    <script src="../scripts/theme.ts"></script>
   </body>
 </html>

@@ -1,0 +1,40 @@
+name: Update shared site UI
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: update-site-ui
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/sync-site-ui.mjs --update
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: pnpm run build
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: maintenance/shared-site-ui
+          commit-message: Update shared site UI snapshot
+          title: Update shared site UI
+          body: |
+            Updates the pinned shared visual foundation from czNail/cznail.github.io.
+            Snapshot checksums and this application's build/tests passed before opening this PR.
+            Review the shared desktop/mobile and light/dark screenshots before merging.
+          add-paths: |
+            vendor/site-ui
+            site-ui.lock.json
+            public/favicon.svg

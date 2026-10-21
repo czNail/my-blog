@@ -40,3 +40,12 @@ pnpm run preview
 ```text
 https://cznail.github.io/my-blog/
 ```
+
+## 共享站点样式
+
+配色、字体、钉子标志、全站导航、页脚与深浅色切换来自 [主页仓库的 site-ui](https://github.com/czNail/cznail.github.io/tree/main/packages/site-ui)。`vendor/site-ui` 是自动生成的副本，`site-ui.lock.json` 记录来源提交和 SHA-256 校验值。不要直接编辑副本。
+
+- 更新：`node scripts/sync-site-ui.mjs --update`；核验：`npm run check:site-ui`。
+- 构建和开发前自动核验副本并生成本站的主题脚本、图标；上线后不依赖跨站脚本加载。
+- 每日工作流检查上游更新，通过本项目构建后提出升级 PR；仓库需要允许 GitHub Actions 创建 PR。
+- 共享改版先在主页仓库运行四站桌面/手机、浅色/深色检查并审查截图；本项目保留自己的业务布局与数据格式。

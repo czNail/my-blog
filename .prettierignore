@@ -12,3 +12,5 @@
 !.prettierrc
 !eslint.config.js
 !README.md
+/public/favicon.svg
+/public/site-ui/

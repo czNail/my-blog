@@ -1,0 +1,46 @@
+/* Canonical tokens. Change these here, then update the consumer snapshots. */
+:root {
+  color-scheme: light;
+  --site-bg: #e8ece5;
+  --site-surface: #f1f2eb;
+  --site-soft: #e0e7dd;
+  --site-text: #243633;
+  --site-muted: #5c6e69;
+  --site-border: #cbd5cb;
+  --site-accent: #287c82;
+  --site-accent-soft: #dcece8;
+  --site-on-accent: #ffffff;
+  --site-warm: #d69a66;
+  --site-success: #28725b;
+  --site-success-soft: #e1eee4;
+  --site-warning: #87601e;
+  --site-warning-soft: #f6ecd6;
+  --site-danger: #b54845;
+  --site-danger-soft: #fae6e1;
+  --site-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --site-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --site-radius-control: 8px;
+  --site-radius-card: 13px;
+  --site-shadow: 0 8px 30px #203c3010;
+  --site-content-width: 1120px;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --site-bg: #172623;
+  --site-surface: #1e302a;
+  --site-soft: #233b32;
+  --site-text: #e5eeea;
+  --site-muted: #adc0b8;
+  --site-border: #344b43;
+  --site-accent: #91d1c9;
+  --site-accent-soft: #2c5148;
+  --site-on-accent: #172623;
+  --site-warm: #d9ab81;
+  --site-success: #96d7bc;
+  --site-success-soft: #254037;
+  --site-warning: #efc880;
+  --site-warning-soft: #3a3022;
+  --site-danger: #f1a5a1;
+  --site-danger-soft: #402c35;
+  --site-shadow: 0 8px 30px #00000020;
+}
