@@ -1,14 +1,14 @@
 {
-  "version": "1.0.1",
+  "version": "1.1.0",
   "files": {
     "README.md": "8af9fea5389855d945973efcc8c341de71023b1a1dc399d7c58a8f45a591d3dd",
     "logo.mjs": "0f3ad451f5af8b8d5a1160024e1269ba03ed8c7c31bfd37458d5422583a77240",
     "logo.svg": "7c31b6623e90e2c8b19f5ebb86c959cee83c31bc43693e4b3aa2ee6585f131bb",
-    "package.json": "ceeebdd22defe4cc923baca74e80469f051ee5f82bd40c7dfe7241517c9b47df",
+    "package.json": "58297bc90215803cd428e9814ba8825d308180ebcb7fcc2bb878c6ca3d595275",
     "runtime.js": "53787ace724c444650a09585f2a3218532577e8bd9de7d68bade5d8988fc5009",
     "shell.css": "987968b4ac2c0af86ecff90ab00984b4ee44780c42742a9b59e8ec4961a59e53",
-    "shell.d.mts": "414f8bbaf28dcdfcb792b1617609fc2fea12922211b00a044ece0a43ca4fa35f",
-    "shell.mjs": "707e78eeb2c9a4d07f3036f82e9bbf30ccf36dc2a2ff176a192f0e6b19ca3c61",
-    "tokens.css": "1a90b40472f3e2dfd9474ce6b5f595111e2ddfd72705221c664bc92e72dbdc4f"
+    "shell.d.mts": "b1689c2c7fc95949c95bfbd2ae1ff472277218438b6a4f8f3b8285ab9d9626e5",
+    "shell.mjs": "8830db58909664c7b5e49a003bb28f8ef5230f2036ca07fb00859c81960e2f02",
+    "tokens.css": "8b1428a3e62634393a7cbcb92f160b63028f6433b3314c1600b9d3fb022ab636"
   }
 }

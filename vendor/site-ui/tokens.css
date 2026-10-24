@@ -1,12 +1,12 @@
 /* Canonical tokens. Change these here, then update the consumer snapshots. */
 :root {
   color-scheme: light;
-  --site-bg: #e8ece5;
-  --site-surface: #f1f2eb;
+  --site-bg: #edf0e9;
+  --site-surface: #fafbf6;
   --site-soft: #e0e7dd;
   --site-text: #243633;
   --site-muted: #5c6e69;
-  --site-border: #cbd5cb;
+  --site-border: #becdc3;
   --site-accent: #287c82;
   --site-accent-soft: #dcece8;
   --site-on-accent: #ffffff;

@@ -1,6 +1,6 @@
 {
   "name": "@cznail/site-ui",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "Shared visual foundation for Neil Chen's homepage, blog and browser tools"
