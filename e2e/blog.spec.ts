@@ -7,12 +7,16 @@ test("timeline preserves publication dates, equal entries, native month disclosu
   await page.goto("./");
   await expect(page.locator(".timeline-entry")).toHaveCount(8);
   await expect(page.locator("#featured")).toHaveCount(0);
-  const october = page.locator(".timeline-month").first();
-  await october.locator("summary").click();
-  await expect(october).not.toHaveAttribute("open");
-  await october.locator("summary").press("Enter");
-  await expect(october).toHaveAttribute("open");
-  const second = october.locator(".timeline-entry").nth(1);
+  // 最新的月份可能只有一篇文章，选取第一个包含多篇的月份来验证展开与键盘交互
+  const month = page
+    .locator(".timeline-month")
+    .filter({ has: page.locator(".timeline-entry + .timeline-entry") })
+    .first();
+  await month.locator("summary").click();
+  await expect(month).not.toHaveAttribute("open");
+  await month.locator("summary").press("Enter");
+  await expect(month).toHaveAttribute("open");
+  const second = month.locator(".timeline-entry").nth(1);
   await second.locator("a").focus();
   await expect(second).toHaveClass(/is-active/);
   await expect.poll(() => page.locator(".timeline-active-line").first().evaluate(element => parseFloat((element as HTMLElement).style.height))).toBeGreaterThan(0);
