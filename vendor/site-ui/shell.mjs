@@ -1,7 +1,6 @@
 import logo from './logo.mjs';
 const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const defaultTools = [
-  { id: 'portfolio-pilot', name: '仓位助手', url: '/portfolio-pilot/', description: '记录大类仓位与目标比例，安排定投与再平衡。' },
   { id: 'totp', name: 'TOTP 验证器', url: '/totp/', description: '在浏览器本地加密保存账号，生成动态验证码。' },
 ];
 const moon = '<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>';

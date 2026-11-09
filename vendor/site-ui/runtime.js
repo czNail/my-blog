@@ -2,11 +2,10 @@
 (() => {
   if (window.__siteUI) { window.__siteUI.refresh(); return; }
   const key = 'neil-homepage:theme';
-  const legacyKeys = ['theme', 'portfolio-pilot:theme'];
   let theme = 'light';
   function preference() {
     try {
-      for (const name of [key, ...legacyKeys]) {
+      for (const name of [key, 'theme']) {
         const value = localStorage.getItem(name);
         if (value === 'light' || value === 'dark') return value;
       }

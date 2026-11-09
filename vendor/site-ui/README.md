@@ -1,6 +1,6 @@
 # @cznail/site-ui
 
-Canonical visual foundation for `cznail.github.io`, `my-blog`, `totp` and `portfolio-pilot`.
+Canonical visual foundation for `cznail.github.io`, `my-blog` and `totp`.
 
 - `tokens.css`: semantic colors, fonts, radii and light/dark themes.
 - `shell.mjs` / `shell.css` / `logo.svg`: server/build-rendered navigation, brand and footer.
