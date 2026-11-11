@@ -1,164 +1,119 @@
 ---
-import IconX from "@/assets/icons/IconX.svg";
-import IconSearch from "@/assets/icons/IconSearch.svg";
-import IconArchive from "@/assets/icons/IconArchive.svg";
-import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import LinkButton from "./LinkButton.astro";
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import { SITE } from "@/config";
 import { getBasePath } from "@/utils/getBasePath";
 import { ui } from "@/i18n";
 
-const { pathname } = Astro.url;
-
-// Remove trailing slash from current pathname if exists
-const currentPath =
-  pathname
-    .replace(import.meta.env.BASE_URL.replace(/\/$/, ""), "")
-    .replace(/\/$/, "") || "/";
-
-const isActive = (path: string) => {
-  const currentPathArray = currentPath.split("/").filter(p => p.trim());
-  const pathArray = path.split("/").filter(p => p.trim());
-
-  return currentPath === path || currentPathArray[0] === pathArray[0];
-};
+const links = [
+  { path: "posts/", label: ui.navPosts },
+  { path: "tags/", label: ui.navTags },
+  ...(SITE.showArchives ? [{ path: "archives/", label: ui.navArchives }] : []),
+  { path: "about/", label: ui.navAbout },
+  { path: "search/", label: ui.navSearch },
+];
+const isCurrent = (href: string) => Astro.url.pathname.startsWith(href);
 ---
 
 <a
   id="skip-to-content"
   href="#main-content"
-  class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
+  class="absolute start-4 -top-full z-50 bg-background px-3 py-2 text-accent focus:top-4"
 >
-  Skip to content
+  跳到主要内容
 </a>
 
-<header
-  class="app-layout flex flex-col items-center justify-between sm:flex-row"
->
-  <div
-    id="top-nav-wrap"
-    class:list={[
-      "py-4 sm:py-6",
-      "border-b border-border",
-      "relative w-full bg-background",
-      "flex items-baseline justify-between sm:items-center",
-    ]}
-  >
-    <a
-      href={getBasePath("/")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
-    >
-      博客
-    </a>
-    <nav
-      id="nav-menu"
-      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
-    >
-      <button
-        id="menu-btn"
-        class="focus-outline self-end p-2 sm:hidden"
-        aria-label="Open Menu"
-        aria-expanded="false"
-        aria-controls="menu-items"
-      >
-        <IconX id="close-icon" class="hidden" />
-        <IconMenuDeep id="menu-icon" />
-      </button>
-      <ul
-        id="menu-items"
-        class:list={[
-          "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
-          "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
-          "hidden",
-          "sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0",
-        ]}
-      >
-        <li class="col-span-2">
-          <a
-            href={getBasePath("/posts")}
-            class:list={{ "active-nav": isActive("/posts") }}
-          >
-            {ui.navPosts}
-          </a>
-        </li>
-        <li class="col-span-2">
-          <a
-            href={getBasePath("/tags")}
-            class:list={{ "active-nav": isActive("/tags") }}
-          >
-            {ui.navTags}
-          </a>
-        </li>
-        <li class="col-span-2">
-          <a
-            href={getBasePath("/about")}
-            class:list={{ "active-nav": isActive("/about") }}
-          >
-            {ui.navAbout}
-          </a>
-        </li>
-        {
-          SITE.showArchives && (
-            <li class="col-span-2">
-              <LinkButton
-                href={getBasePath("/archives")}
-                class:list={[
-                  "focus-outline flex justify-center p-3 sm:p-1",
-                  {
-                    "active-nav [&>svg]:stroke-accent": isActive("/archives"),
-                  },
-                ]}
-                title={ui.navArchives}
-                aria-label="archives"
-              >
-                <IconArchive class="hidden sm:inline-block" />
-                <span class="sm:sr-only">{ui.navArchives}</span>
-              </LinkButton>
-            </li>
-          )
-        }
-        <li class="col-span-1 flex items-center justify-center">
-          <LinkButton
-            href={getBasePath("/search")}
-            class:list={[
-              "focus-outline flex p-3 sm:p-1",
-              { "[&>svg]:stroke-accent": isActive("/search") },
-            ]}
-            title={ui.navSearch}
-            aria-label="search"
-          >
-            <IconSearch />
-            <span class="sr-only">{ui.navSearch}</span>
-          </LinkButton>
-        </li>
-      </ul>
+<header class="app-layout">
+  <div class="blog-bar">
+    <a class="blog-title" href={getBasePath("/")}>{ui.siteTitle}</a>
+    <nav aria-label="博客导航">
+      {
+        links.map(({ path, label }) => {
+          const href = getBasePath(path);
+          return (
+            <a href={href} aria-current={isCurrent(href) ? "location" : undefined}>
+              {label}
+            </a>
+          );
+        })
+      }
     </nav>
+    <button
+      class="theme-switch"
+      type="button"
+      data-site-theme
+      aria-label="切换到深色主题"
+      aria-pressed="false"
+    >
+      <IconMoon class="theme-moon" aria-hidden="true" />
+      <IconSunHigh class="theme-sun" aria-hidden="true" />
+    </button>
   </div>
 </header>
 
-<script>
-  function toggleNav() {
-    const menuBtn = document.querySelector("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
-    const menuIcon = document.querySelector("#menu-icon");
-    const closeIcon = document.querySelector("#close-icon");
-
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
-
-    menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
-
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "Open Menu" : "Close Menu");
-
-      menuItems.classList.toggle("hidden");
-      menuIcon.classList.toggle("hidden");
-      closeIcon.classList.toggle("hidden");
-    });
+<style>
+  .blog-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
   }
-
-  toggleNav();
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
-</script>
+  .blog-title {
+    font-size: 1rem;
+    font-weight: 650;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    margin-inline-start: auto;
+    color: var(--site-muted);
+    font-size: 0.875rem;
+  }
+  nav a {
+    padding-block: 0.45rem;
+  }
+  nav a:hover,
+  nav a[aria-current] {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+  .theme-switch {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--site-radius-control);
+  }
+  .theme-switch:hover {
+    background: var(--muted);
+  }
+  .theme-switch svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .theme-sun,
+  :global([data-theme="dark"]) .theme-moon {
+    display: none;
+  }
+  :global([data-theme="dark"]) .theme-sun {
+    display: block;
+  }
+  @media (max-width: 560px) {
+    .blog-bar {
+      flex-wrap: wrap;
+    }
+    .theme-switch {
+      margin-inline-start: auto;
+    }
+    nav {
+      order: 1;
+      width: 100%;
+      margin: 0;
+    }
+  }
+</style>

@@ -43,7 +43,7 @@ https://cznail.github.io/my-blog/
 
 ## 共享站点样式
 
-配色、字体、钉子标志、全站导航、页脚与深浅色切换来自 [主页仓库的 site-ui](https://github.com/czNail/cznail.github.io/tree/main/packages/site-ui)。`vendor/site-ui` 是自动生成的副本，`site-ui.lock.json` 记录来源提交和 SHA-256 校验值。不要直接编辑副本。
+基础配色、字体、图标与深浅色切换来自 [主页仓库的 site-ui](https://github.com/czNail/cznail.github.io/tree/main/packages/site-ui)。`vendor/site-ui` 是自动生成的副本，`site-ui.lock.json` 记录来源提交和 SHA-256 校验值。不要直接编辑副本。本站维护自己的页面布局，并提供「返回个人主页」入口。
 
 - 更新：`node scripts/sync-site-ui.mjs --update`；核验：`npm run check:site-ui`。
 - 构建和开发前自动核验副本并生成本站的主题脚本、图标；上线后不依赖跨站脚本加载。

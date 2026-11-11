@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "../../vendor/site-ui/tokens.css";
-@import "../../vendor/site-ui/shell.css";
 @import "./typography.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -51,10 +50,6 @@
 
 @utility app-layout {
   @apply mx-auto w-full max-w-app px-4;
-}
-
-.active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */

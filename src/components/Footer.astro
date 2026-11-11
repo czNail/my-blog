@@ -1,10 +1,34 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { footerMarkup } from "../../vendor/site-ui/shell.mjs";
 type Props = { noMarginTop?: boolean } & HTMLAttributes<"footer">;
 const { noMarginTop = false, class: className } = Astro.props;
 ---
 
-<div class:list={[{ "mt-auto": !noMarginTop }, className]}>
-  <Fragment set:html={footerMarkup()} />
-</div>
+<footer class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}>
+  <div class="blog-end">
+    <a class="home-return" href="/" data-astro-reload>
+      <span aria-hidden="true">←</span> 返回个人主页
+    </a>
+  </div>
+</footer>
+
+<style>
+  .blog-end {
+    border-top: 1px solid var(--border);
+    padding-block: 1rem 1.5rem;
+  }
+  .home-return {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--site-radius-control);
+    padding-inline: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .home-return:hover {
+    color: var(--accent);
+    background: var(--muted);
+  }
+</style>

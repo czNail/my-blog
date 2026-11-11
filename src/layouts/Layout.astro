@@ -5,7 +5,6 @@ import { SITE } from "@/config";
 import { getBasePath } from "@/utils/getBasePath";
 import { ui } from "@/i18n";
 import "@/styles/global.css";
-import SiteNav from "@/components/SiteNav.astro";
 
 type Props = {
   title?: string;
@@ -137,7 +136,6 @@ const structuredData = {
     <script is:inline src={getBasePath("site-ui/runtime.js")}></script>
   </head>
   <body>
-    <SiteNav />
     <slot />
   </body>
 </html>
